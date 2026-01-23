@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { equal } from 'assert';
+import { equals } from 'class-validator';
 import { PrismaService } from 'src/database/prisma/prisma.service';
 import { User } from 'src/user/domain/entities/user.entity';
 import { UserRepository } from 'src/user/domain/repositories/user.repository';
@@ -20,7 +22,7 @@ export class UserPrismaRepository implements UserRepository {
   async findByEmail(email: string): Promise<User | null> {
     const user = await this.prisma.users.findUnique({
       where: {
-        email: email,
+        email: email
       },
     });
 

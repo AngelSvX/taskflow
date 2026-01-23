@@ -11,10 +11,9 @@ import { UserPrismaRepository } from './infrastructure/prisma/user-prisma.reposi
     CreateUserUseCase,
     {
       provide: UserRepository,
-      useClass: UserPrismaRepository
-    }
+      useClass: UserPrismaRepository,
+    },
   ],
   exports: [],
 })
-
 export class UserModule {}

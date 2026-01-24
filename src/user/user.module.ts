@@ -5,6 +5,7 @@ import { UserRepository } from './domain/repositories/user.repository';
 import { UserPrismaRepository } from './infrastructure/prisma/user-prisma.repository';
 import { FindUserByIdUseCase } from './application/use-cases/find-user-by-id-use-case';
 import { FindUserByEmailUseCase } from './application/use-cases/find-user-by-email-use-case';
+import { UpdateUserUseCase } from './application/use-cases/update-user-use-case';
 
 @Module({
   imports: [],
@@ -13,6 +14,7 @@ import { FindUserByEmailUseCase } from './application/use-cases/find-user-by-ema
     CreateUserUseCase,
     FindUserByIdUseCase,
     FindUserByEmailUseCase,
+    UpdateUserUseCase,
     {
       provide: UserRepository,
       useClass: UserPrismaRepository,

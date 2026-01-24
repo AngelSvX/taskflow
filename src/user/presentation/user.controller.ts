@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateUserUseCase } from '../application/use-cases/create-user-use-case';
 import { CreateUserRequestDto } from './dto/request/create-user.dto';
 import { CreateUserResponseDto } from './dto/response/create-user-response.dto';
@@ -9,6 +9,8 @@ import { FindUserByEmailResponseDto } from './dto/response/find-user-by-email-re
 import { UpdateUserRequestDto } from './dto/request/update-user.dto';
 import { UpdateUserResponseDto } from './dto/response/update-user-response.dto';
 import { UpdateUserUseCase } from '../application/use-cases/update-user-use-case';
+import { DeleteUserResponseDto } from './dto/response/delete-user-response.dto';
+import { DeleteUserUseCase } from '../application/use-cases/delete-user-use-case';
 
 @Controller('users')
 export class UserController {
@@ -16,7 +18,8 @@ export class UserController {
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly findUserByIdUseCase: FindUserByIdUseCase,
     private readonly findUserByEmailUseCase: FindUserByEmailUseCase,
-    private readonly updateUserUseCase: UpdateUserUseCase
+    private readonly updateUserUseCase: UpdateUserUseCase,
+    private readonly deleteUserUseCase: DeleteUserUseCase
   ) {}
 
   @Post('/create')
@@ -45,6 +48,16 @@ export class UserController {
         email: user.email,
       }
     }    
+  }
+
+  @Delete("/delete/:id")
+  async deleteUser(@Param('id') id: string): Promise<DeleteUserResponseDto>{
+    await this.deleteUserUseCase.execute(id);
+    return {
+      code: 200,
+      status: 'success',
+      message: 'User deleted successfully',
+    };
   }
 
   @Patch("/update/:id")

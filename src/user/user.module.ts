@@ -8,6 +8,8 @@ import { FindUserByEmailUseCase } from './application/use-cases/find-user-by-ema
 import { UpdateUserUseCase } from './application/use-cases/update-user-use-case';
 import { DeleteUserUseCase } from './application/use-cases/delete-user-use-case';
 import { FindAllUserUseCase } from './application/use-cases/find-all-user-use-case';
+import { AuthUserUseCase } from './application/use-cases/auth-user-use-case';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [],
@@ -19,9 +21,14 @@ import { FindAllUserUseCase } from './application/use-cases/find-all-user-use-ca
     UpdateUserUseCase,
     DeleteUserUseCase,
     FindAllUserUseCase,
+    AuthUserUseCase,
     {
       provide: UserRepository,
       useClass: UserPrismaRepository,
+    },
+    {
+      provide: JwtService,
+      useClass: JwtService,
     },
   ],
   exports: [],

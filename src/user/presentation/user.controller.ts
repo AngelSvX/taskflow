@@ -13,6 +13,9 @@ import { DeleteUserResponseDto } from './dto/response/delete-user-response.dto';
 import { DeleteUserUseCase } from '../application/use-cases/delete-user-use-case';
 import { FindAllUserUseCase } from '../application/use-cases/find-all-user-use-case';
 import { FindAllUserResponseDto } from './dto/response/find-all-user-response.dto';
+import { AuthUserRequestDto } from './dto/request/auth-user.dto';
+import { AuthUserResponseDto } from './dto/response/auth-user-response.dto';
+import { AuthUserUseCase } from '../application/use-cases/auth-user-use-case';
 
 @Controller('users')
 export class UserController {
@@ -22,7 +25,8 @@ export class UserController {
     private readonly findUserByEmailUseCase: FindUserByEmailUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
     private readonly deleteUserUseCase: DeleteUserUseCase,
-    private readonly findAllUserUseCase: FindAllUserUseCase
+    private readonly findAllUserUseCase: FindAllUserUseCase,
+    private readonly authUserUseCase: AuthUserUseCase,
   ) {}
 
   @Post('/create')
@@ -34,6 +38,17 @@ export class UserController {
       code: '201',
       status: 'success',
       message: 'User created successfully',
+    };
+  }
+
+  @Post('/auth')
+  async authUser(@Body() user: AuthUserRequestDto ): Promise<AuthUserResponseDto>{
+    const token = await this.authUserUseCase.execute(user.email, user.password);
+    return {
+      code: '200',
+      status: 'success',
+      message: 'User authenticated successfully',
+      token: token,
     };
   }
 

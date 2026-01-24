@@ -11,6 +11,8 @@ import { UpdateUserResponseDto } from './dto/response/update-user-response.dto';
 import { UpdateUserUseCase } from '../application/use-cases/update-user-use-case';
 import { DeleteUserResponseDto } from './dto/response/delete-user-response.dto';
 import { DeleteUserUseCase } from '../application/use-cases/delete-user-use-case';
+import { FindAllUserUseCase } from '../application/use-cases/find-all-user-use-case';
+import { FindAllUserResponseDto } from './dto/response/find-all-user-response.dto';
 
 @Controller('users')
 export class UserController {
@@ -19,7 +21,8 @@ export class UserController {
     private readonly findUserByIdUseCase: FindUserByIdUseCase,
     private readonly findUserByEmailUseCase: FindUserByEmailUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
-    private readonly deleteUserUseCase: DeleteUserUseCase
+    private readonly deleteUserUseCase: DeleteUserUseCase,
+    private readonly findAllUserUseCase: FindAllUserUseCase
   ) {}
 
   @Post('/create')
@@ -58,6 +61,21 @@ export class UserController {
       status: 'success',
       message: 'User deleted successfully',
     };
+  }
+
+  @Get("findAll")
+  async findAllUser(): Promise<FindAllUserResponseDto>{
+    const users = await this.findAllUserUseCase.execute();
+    return {
+      code: 200,
+      status: 'success',
+      message: 'Users found successfully',
+      data: users.map(user => ({
+        id: user.id || '',
+        name: user.name,
+        email: user.email,
+      })),
+    }
   }
 
   @Patch("/update/:id")

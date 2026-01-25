@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { CreateUserUseCase } from '../application/use-cases/create-user-use-case';
 import { CreateUserRequestDto } from './dto/request/create-user.dto';
 import { CreateUserResponseDto } from './dto/response/create-user-response.dto';
@@ -16,6 +16,7 @@ import { FindAllUserResponseDto } from './dto/response/find-all-user-response.dt
 import { AuthUserRequestDto } from './dto/request/auth-user.dto';
 import { AuthUserResponseDto } from './dto/response/auth-user-response.dto';
 import { AuthUserUseCase } from '../application/use-cases/auth-user-use-case';
+import { AuthGuard } from 'src/commons/guards/auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -53,6 +54,7 @@ export class UserController {
   }
 
   @Post('/find/email')
+  @UseGuards(AuthGuard)
   async findUserByEmail(@Body("email") email: string): Promise<FindUserByEmailResponseDto>{
     const user = await this.findUserByEmailUseCase.execute(email);
     return {
@@ -69,6 +71,7 @@ export class UserController {
   }
 
   @Delete("/delete/:id")
+  @UseGuards(AuthGuard)
   async deleteUser(@Param('id') id: string): Promise<DeleteUserResponseDto>{
     await this.deleteUserUseCase.execute(id);
     return {
@@ -79,6 +82,7 @@ export class UserController {
   }
 
   @Get("findAll")
+  @UseGuards(AuthGuard)
   async findAllUser(): Promise<FindAllUserResponseDto>{
     const users = await this.findAllUserUseCase.execute();
     return {
@@ -94,6 +98,7 @@ export class UserController {
   }
 
   @Patch("/update/:id")
+  @UseGuards(AuthGuard)
   async updateUser(@Body() user: UpdateUserRequestDto, @Param('id') id: string): Promise<UpdateUserResponseDto> {
     await this.updateUserUseCase.execute(id, user);
     return {
@@ -109,6 +114,7 @@ export class UserController {
   }
 
   @Get('/find/:id')
+  @UseGuards(AuthGuard)
   async findUserById(@Param('id') id: string): Promise<FindUserByIdResponseDto> {
     const user = await this.findUserByIdUseCase.execute(id);
     return {

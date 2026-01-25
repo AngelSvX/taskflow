@@ -81,7 +81,7 @@ export class UserController {
     };
   }
 
-  @Get("findAll")
+  @Get("/find/all")
   @UseGuards(AuthGuard)
   async findAllUser(): Promise<FindAllUserResponseDto>{
     const users = await this.findAllUserUseCase.execute();

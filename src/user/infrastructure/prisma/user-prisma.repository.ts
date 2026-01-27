@@ -32,7 +32,7 @@ export class UserPrismaRepository implements UserRepository {
       return null;
     }
 
-    return new User(user.id.toString(), user.name, user.email, user.password);
+    return new User(user.id.toString(), user.name, user.email, user.password, user.position);
   }
 
   async findById(id: string): Promise<User | null> {
@@ -46,7 +46,7 @@ export class UserPrismaRepository implements UserRepository {
       return null;
     }
 
-    return new User(user.id.toString(), user.name, user.email, user.password);
+    return new User(user.id.toString(), user.name, user.email, user.password, user.position);
   }
 
   async findAll(): Promise<User[]> {
@@ -54,7 +54,7 @@ export class UserPrismaRepository implements UserRepository {
 
     return users.map(
       (user) =>
-        new User(user.id.toString(), user.name, user.email, user.password),
+        new User(user.id.toString(), user.name, user.email, user.password, user.position),
     );
   }
 

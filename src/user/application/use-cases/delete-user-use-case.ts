@@ -1,4 +1,4 @@
-import { Inject } from "@nestjs/common";
+import { Inject, NotFoundException } from "@nestjs/common";
 import { UserRepository } from "src/user/domain/repositories/user.repository";
 
 export class DeleteUserUseCase {
@@ -11,7 +11,7 @@ export class DeleteUserUseCase {
         const user = await this.userRepository.findById(id);
 
         if(!user){
-            throw new Error('User not found');
+            throw new NotFoundException('That user does not exist! D:');
         }
 
         await this.userRepository.delete(id);

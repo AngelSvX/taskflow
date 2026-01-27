@@ -1,4 +1,4 @@
-import { Inject } from "@nestjs/common";
+import { Inject, NotFoundException } from "@nestjs/common";
 import { User } from "src/user/domain/entities/user.entity";
 import { UserRepository } from "src/user/domain/repositories/user.repository";
 
@@ -9,6 +9,12 @@ export class FindAllUserUseCase {
     ){}
 
     async execute(): Promise<User[]>{
-        return await this.userRepository.findAll();
+        const users = await this.userRepository.findAll();
+
+        if(!users){
+            throw new NotFoundException('There are no users here, come back later!');
+        }
+
+        return users;
     }
 }

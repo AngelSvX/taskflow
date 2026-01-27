@@ -1,6 +1,6 @@
 import { User } from "src/user/domain/entities/user.entity";
 import { UserRepository } from "src/user/domain/repositories/user.repository";
-import { Inject } from "@nestjs/common";
+import { Inject, NotFoundException } from "@nestjs/common";
 
 export class FindUserByEmailUseCase {
     constructor(
@@ -11,7 +11,7 @@ export class FindUserByEmailUseCase {
     async execute(email: string): Promise<User> {
         const user = await this.userRepository.findByEmail(email);
         if (!user) {
-            throw new Error('User not found');
+            throw new NotFoundException('User not found');
         }
         return user;
     }

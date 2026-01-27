@@ -12,4 +12,7 @@ export class CreateUserRequestDto {
   @MinLength(6)
   @IsString()
   name: string;
+
+  @IsString()
+  position: string;
 }

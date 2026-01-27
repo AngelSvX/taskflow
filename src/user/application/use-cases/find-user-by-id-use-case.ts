@@ -1,4 +1,4 @@
-import { Inject } from "@nestjs/common";
+import { Inject, NotFoundException } from "@nestjs/common";
 import { User } from "src/user/domain/entities/user.entity";
 import { UserRepository } from "src/user/domain/repositories/user.repository";
 
@@ -12,7 +12,7 @@ export class FindUserByIdUseCase {
         const user = await this.userRepository.findById(id);
 
         if(!user){
-            throw new Error('User not found');
+            throw new NotFoundException('User not found');
         }
 
         return user;

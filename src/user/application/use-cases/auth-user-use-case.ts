@@ -3,6 +3,7 @@ import { UserRepository } from "src/user/domain/repositories/user.repository";
 import bcrypt from 'bcrypt'
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
+import { PasswordVO } from "src/user/domain/value-objects/password.vo";
 
 export class AuthUserUseCase {
     constructor(
@@ -19,7 +20,7 @@ export class AuthUserUseCase {
             throw new NotFoundException("Usuario no encontrado");
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password)
+        const isPasswordValid = await PasswordVO.compare(password, user.password)
 
         if(!isPasswordValid){
             throw new NotFoundException("Contraseña incorrecta");

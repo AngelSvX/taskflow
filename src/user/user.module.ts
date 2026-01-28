@@ -11,6 +11,8 @@ import { FindAllUserUseCase } from './application/use-cases/find-all-user-use-ca
 import { AuthUserUseCase } from './application/use-cases/auth-user-use-case';
 import { JwtService } from '@nestjs/jwt';
 import { AuthMiddleware } from 'src/commons/middlewares/auth.middleware';
+import { ProfileRepository } from './domain/repositories/profile.repository';
+import { ProfilePrismaRepository } from './infrastructure/prisma/profile-prisma.repository';
 
 @Module({
   imports: [],
@@ -26,6 +28,10 @@ import { AuthMiddleware } from 'src/commons/middlewares/auth.middleware';
     {
       provide: UserRepository,
       useClass: UserPrismaRepository,
+    },
+    {
+      provide: ProfileRepository,
+      useClass: ProfilePrismaRepository,
     },
     {
       provide: JwtService,

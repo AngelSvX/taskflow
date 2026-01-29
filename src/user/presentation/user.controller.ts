@@ -17,6 +17,10 @@ import { AuthUserRequestDto } from './dto/request/auth-user.dto';
 import { AuthUserResponseDto } from './dto/response/auth-user-response.dto';
 import { AuthUserUseCase } from '../application/use-cases/auth-user-use-case';
 import { AuthGuard } from 'src/commons/guards/auth.guard';
+import { UpdateProfileUseCase } from '../application/use-cases/update-profile-use-case';
+import { UpdateProfileRequestDto } from './dto/request/update-profile.dto';
+import { Profile } from '../domain/entities/profile.entity';
+import { UpdateProfileResponseDto } from './dto/response/update-profile-response.dto';
 
 @Controller('users')
 export class UserController {
@@ -28,6 +32,7 @@ export class UserController {
     private readonly deleteUserUseCase: DeleteUserUseCase,
     private readonly findAllUserUseCase: FindAllUserUseCase,
     private readonly authUserUseCase: AuthUserUseCase,
+    private readonly updateProfileUseCase: UpdateProfileUseCase,
   ) {}
 
   @Post('/create')
@@ -120,6 +125,22 @@ export class UserController {
         id,
         name: user.name,
         email: user.email,
+      }
+    };
+  }
+
+  @Patch("/updateProfile/:id")
+  @UseGuards(AuthGuard)
+  async updateProfile(@Body() profile: UpdateProfileRequestDto, @Param('id') id: string): Promise<UpdateProfileResponseDto>{
+    await this.updateProfileUseCase.execute(profile as Profile, id);
+    return {
+      code: 200,
+      status: 'success',
+      message: 'Profile updated successfully',
+      data: {
+        id,
+        bio: profile.bio,
+        avatar_url: profile.avatar_url,
       }
     };
   }

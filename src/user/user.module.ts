@@ -13,6 +13,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthMiddleware } from 'src/commons/middlewares/auth.middleware';
 import { ProfileRepository } from './domain/repositories/profile.repository';
 import { ProfilePrismaRepository } from './infrastructure/prisma/profile-prisma.repository';
+import { UpdateProfileUseCase } from './application/use-cases/update-profile-use-case';
 
 @Module({
   imports: [],
@@ -25,6 +26,7 @@ import { ProfilePrismaRepository } from './infrastructure/prisma/profile-prisma.
     DeleteUserUseCase,
     FindAllUserUseCase,
     AuthUserUseCase,
+    UpdateProfileUseCase,
     {
       provide: UserRepository,
       useClass: UserPrismaRepository,

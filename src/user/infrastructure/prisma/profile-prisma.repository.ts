@@ -7,15 +7,16 @@ import { ProfileRepository } from "src/user/domain/repositories/profile.reposito
 export class ProfilePrismaRepository implements ProfileRepository {
     constructor(private readonly prisma: PrismaService) {}
 
-    async create(profile: Profile): Promise<void> {
-        
-        await this.prisma.profiles.create({
+    async update(profile: Profile, userId: string){
+        await this.prisma.profiles.update({
+            where: {
+                user_id: Number(userId)
+            },
             data: {
-                user_id: profile.user_id,
                 bio: profile.bio,
-                avatar_url: profile.avatar_url,
+                avatar_url: profile.avatar_url
             }
         })
-
     }
+
 }

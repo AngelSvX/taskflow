@@ -15,4 +15,7 @@ export class CreateUserRequestDto {
 
   @IsString()
   position: string;
+
+  @IsString()
+  bio: string;
 }

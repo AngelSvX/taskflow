@@ -7,5 +7,10 @@ export class FindUserByIdResponseDto {
         id: string;
         name: string;
         email: string;
+        position: string;
+        profiles: {
+            bio: string;
+            avatar_url: string;
+        }
     }
 }

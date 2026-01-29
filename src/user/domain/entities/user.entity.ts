@@ -1,3 +1,5 @@
+import { Profile } from "./profile.entity";
+
 export class User {
   constructor(
     public readonly id: string | null,
@@ -5,5 +7,6 @@ export class User {
     public email: string,
     public password: string,
     public position: string,
+    public profile: Profile | null,
   ) {}
 }

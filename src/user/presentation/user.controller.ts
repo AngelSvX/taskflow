@@ -34,6 +34,7 @@ export class UserController {
   async createUser(
     @Body() user: CreateUserRequestDto,
   ): Promise<CreateUserResponseDto> {
+
     await this.createUserUseCase.execute(user);
     return {
       code: '201',
@@ -66,6 +67,11 @@ export class UserController {
         id: user.id || '',
         name: user.name,
         email: user.email,
+        position: user.position,
+        profiles: {
+          bio: user.profile?.bio || '',
+          avatar_url: user.profile?.avatar_url || '', 
+        }
       }
     }    
   }
@@ -93,6 +99,11 @@ export class UserController {
         id: user.id || '',
         name: user.name,
         email: user.email,
+        position: user.position,
+        profiles: {
+          bio: user.profile?.bio || '',
+          avatar_url: user.profile?.avatar_url || '', 
+        }
       })),
     }
   }
@@ -126,6 +137,11 @@ export class UserController {
         id,
         name: user.name,
         email: user.email,
+        position: user.position,
+        profiles: {
+          bio: user.profile?.bio || '',
+          avatar_url: user.profile?.avatar_url || '', 
+        }
       }
     }
   }

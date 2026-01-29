@@ -6,5 +6,10 @@ export class FindAllUserResponseDto{
         id: string,
         name: string,
         email: string
+        position: string
+        profiles: {
+            bio: string;
+            avatar_url: string;
+        }
     }[];
 }

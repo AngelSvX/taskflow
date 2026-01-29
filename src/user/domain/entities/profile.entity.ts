@@ -1,8 +1,8 @@
 export class Profile {
   constructor(
-    public readonly id: string | null,
+    public readonly id: number,
     public user_id: number,
-    public bio: string,
-    public avatar_url: string,
+    public bio: string | null,
+    public avatar_url: string | null,
   ) {}
 }

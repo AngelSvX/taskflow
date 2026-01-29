@@ -15,6 +15,12 @@ export class UserPrismaRepository implements UserRepository {
         email: user.email,
         name: user.name,
         password: user.password,
+        profiles: {
+          create: {
+            bio: user.profile?.bio,
+            avatar_url: `https://ui-avatars.com/api/?name=${user.name}?background=0D8ABC&color=fff`,
+          }
+        }
       },
     });
   }
@@ -24,19 +30,8 @@ export class UserPrismaRepository implements UserRepository {
       where: {
         email: email
       },
-    });
-
-    if (!user) {
-      return null;
-    }
-
-    return new User(user.id.toString(), user.name, user.email, user.password, user.position);
-  }
-
-  async findById(id: string): Promise<User | null> {
-    const user = await this.prisma.users.findUnique({
-      where: {
-        id: Number(id),
+      include: {
+        profiles: true,
       },
     });
 
@@ -44,15 +39,38 @@ export class UserPrismaRepository implements UserRepository {
       return null;
     }
 
-    return new User(user.id.toString(), user.name, user.email, user.password, user.position);
+    return new User(user.id.toString(), user.name, user.email, user.password, user.position, user.profiles);
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const user = await this.prisma.users.findUnique({
+      where: {
+        id: Number(id),
+      },
+      include: {
+        profiles: true,
+      },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return new User(user.id.toString(), user.name, user.email, user.password, user.position, null);
   }
 
   async findAll(): Promise<User[]> {
-    const users = await this.prisma.users.findMany();
+    const users = await this.prisma.users.findMany(
+      {
+        include: {
+          profiles: true,
+        },
+      }
+    );
 
     return users.map(
       (user) =>
-        new User(user.id.toString(), user.name, user.email, user.password, user.position),
+        new User(user.id.toString(), user.name, user.email, user.password, user.position, user.profiles),
     );
   }
 

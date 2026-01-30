@@ -21,6 +21,8 @@ import { UpdateProfileUseCase } from '../application/use-cases/update-profile-us
 import { UpdateProfileRequestDto } from './dto/request/update-profile.dto';
 import { Profile } from '../domain/entities/profile.entity';
 import { UpdateProfileResponseDto } from './dto/response/update-profile-response.dto';
+import { RolesGuard } from 'src/commons/guards/roles.guard';
+import { Roles } from 'src/commons/decorators/roles.decorator';
 
 @Controller('users')
 export class UserController {
@@ -146,7 +148,8 @@ export class UserController {
   }
 
   @Get('/find/:id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles("User")
   async findUserById(@Param('id') id: string): Promise<FindUserByIdResponseDto> {
     const user = await this.findUserByIdUseCase.execute(id);
     return {

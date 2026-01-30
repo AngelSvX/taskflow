@@ -30,6 +30,7 @@ export class AuthUserUseCase {
             id: user.id,
             email: user.email,
             name: user.name,
+            role: user.position,
         }, {
             secret: this.configService.get('JWT_SECRET'),
         })

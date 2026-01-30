@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate{
         const token = request.headers.authorization;
 
         if(!token){
-            throw new UnauthorizedException("Token no proporcionado");
+            throw new UnauthorizedException("Token has not been provided :(");
         }
 
         const tokenWithoutBearer = token.split(' ')[1];
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate{
             request.user = decodedToken;
             return true;
         } catch (error) {
-            throw new UnauthorizedException("Token inválido");
+            throw new UnauthorizedException("Invalid Token :(");
         }
     }
 }

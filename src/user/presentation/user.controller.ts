@@ -42,6 +42,8 @@ export class UserController {
     @Body() user: CreateUserRequestDto,
   ): Promise<CreateUserResponseDto> {
 
+    console.log("Usuario desde el controlador", user)
+
     await this.createUserUseCase.execute(user);
     return {
       code: '201',

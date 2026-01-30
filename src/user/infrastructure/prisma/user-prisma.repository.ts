@@ -10,11 +10,13 @@ export class UserPrismaRepository implements UserRepository {
   ) { }
 
   async create(user: User): Promise<void> {
+    console.log("Usuario desde el prisma", user)
     await this.prisma.users.create({
       data: {
         email: user.email,
         name: user.name,
         password: user.password,
+        position: user.position,
         profiles: {
           create: {
             bio: user.profile?.bio,

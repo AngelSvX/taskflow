@@ -14,6 +14,8 @@ export class CreateUserUseCase {
   async execute(user: CreateUserRequestDto): Promise<void> {
     const userExists = await this.userRepository.findByEmail(user.email);
 
+    console.log("Usuario desde el use case", user)
+
     if (userExists) {
       throw new ConflictException('User already exists');
     }
@@ -21,6 +23,8 @@ export class CreateUserUseCase {
     const hashedPassword = await PasswordVO.create(user.password)
 
     const newUser = new User(null, user.name, user.email, hashedPassword, user.position, {bio: user.bio} as Profile);
+
+    console.log("Position desde el use case", user.position)
 
     await this.userRepository.create(newUser);
 

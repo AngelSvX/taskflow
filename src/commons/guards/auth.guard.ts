@@ -2,6 +2,7 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { Observable } from "rxjs";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
+import { AuthVO } from "src/user/domain/value-objects/auth.vo";
 
 @Injectable()
 export class AuthGuard implements CanActivate{
@@ -22,9 +23,11 @@ export class AuthGuard implements CanActivate{
         const tokenWithoutBearer = token.split(' ')[1];
 
         try {
-            const decodedToken = this.jwtService.verify(tokenWithoutBearer, {
-                secret: this.configService.get('JWT_SECRET'),
-            })
+
+            const authVO = new AuthVO(this.jwtService, this.configService)
+
+            const decodedToken = authVO.verify(tokenWithoutBearer)
+
             request.user = decodedToken;
             return true;
         } catch (error) {

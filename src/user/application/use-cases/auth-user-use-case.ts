@@ -1,9 +1,9 @@
 import { Inject, NotFoundException } from "@nestjs/common";
 import { UserRepository } from "src/user/domain/repositories/user.repository";
-import bcrypt from 'bcrypt'
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { PasswordVO } from "src/user/domain/value-objects/password.vo";
+import { AuthVO } from "src/user/domain/value-objects/auth.vo";
 
 export class AuthUserUseCase {
     constructor(
@@ -26,14 +26,9 @@ export class AuthUserUseCase {
             throw new NotFoundException("Contraseña incorrecta");
         }
 
-        const token = this.jwtService.sign({
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.position,
-        }, {
-            secret: this.configService.get('JWT_SECRET'),
-        })
+        const authVO = new AuthVO(this.jwtService, this.configService)
+
+        const token = await authVO.signIn(user.id, user.email, user.name, user.position)
 
         return token;
     }

@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma/prisma.service";
 import { Project } from "src/projects/domain/entities/project.entity";
 import { ProjectRepository } from "src/projects/domain/repositories/project.repository";
+import { CreateProjectRequestDto } from "src/projects/presentation/dto/request/create-project-request.dto";
 
 @Injectable()
 export class ProjectPrismaRepository implements ProjectRepository{
@@ -9,7 +10,7 @@ export class ProjectPrismaRepository implements ProjectRepository{
         private readonly prismaService: PrismaService
     ){}
 
-    async create(project: Project): Promise<void> {
+    async create(project: CreateProjectRequestDto): Promise<void> {
         await this.prismaService.projects.create({
             data: {
                 user_id: project.user_id,
@@ -33,7 +34,7 @@ export class ProjectPrismaRepository implements ProjectRepository{
             return null;
         }
 
-        return new Project(project.id, project.user_id, project.title, project.description, project.users.name);
+        return new Project(project.id, project.user_id, project.title, project.description, project.users.name, project.users.email);
 
     }
 
@@ -49,7 +50,7 @@ export class ProjectPrismaRepository implements ProjectRepository{
             }
         });
 
-        return projects.map((project) => new Project(project.id, project.user_id, project.title, project.description, project.users.name));
+        return projects.map((project) => new Project(project.id, project.user_id, project.title, project.description, project.users.name, project.users.email));
     }
 
 }

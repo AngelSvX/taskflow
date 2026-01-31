@@ -21,4 +21,52 @@ export class TaskPrismaRepository implements TaskRepository{
         })
     }
 
+    async findAll(): Promise<Task[]> {
+        const tasks = await this.prismaService.tasks.findMany({
+            include: {
+                projects:{
+                    select: {
+                        title: true
+                    }
+                }
+            }
+        });
+        return tasks.map(task => new Task(
+            task.id,
+            task.project_id,
+            task.title,
+            task.is_completed,
+            task.due_date,
+            task.projects.title
+        ));
+    }
+
+    async findById(id: number): Promise<Task | null> {
+        const task = await this.prismaService.tasks.findUnique({
+            where: {
+                id: id
+            },
+            include: {
+                projects: {
+                    select: {
+                        title: true
+                    }
+                }
+            }
+        })
+
+        if(!task){
+            return null;
+        }
+
+        return new Task(
+            task.id,
+            task.project_id,
+            task.title,
+            task.is_completed,
+            task.due_date,
+            task.projects.title
+        )
+
+    }
 }

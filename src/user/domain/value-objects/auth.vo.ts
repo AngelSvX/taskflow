@@ -1,5 +1,5 @@
-import type { JwtService } from '@nestjs/jwt';
 import type { ConfigService } from '@nestjs/config';
+import type { JwtService } from '@nestjs/jwt';
 
 export class AuthVO {
   constructor(

@@ -1,9 +1,9 @@
+import { ConflictException, Inject } from '@nestjs/common';
+import { Profile } from 'src/user/domain/entities/profile.entity';
 import { User } from 'src/user/domain/entities/user.entity';
 import { UserRepository } from 'src/user/domain/repositories/user.repository';
-import { CreateUserRequestDto } from 'src/user/presentation/dto/request/create-user.dto';
-import { ConflictException, Inject } from '@nestjs/common';
 import { PasswordVO } from 'src/user/domain/value-objects/password.vo';
-import { Profile } from 'src/user/domain/entities/profile.entity';
+import { CreateUserRequestDto } from 'src/user/presentation/dto/request/create-user.dto';
 
 export class CreateUserUseCase {
   constructor(

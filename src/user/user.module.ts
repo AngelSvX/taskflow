@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthMiddleware } from 'src/commons/middlewares/auth.middleware';
+
 import { AuthUserUseCase } from './application/use-cases/auth-user-use-case';
 import { CreateUserUseCase } from './application/use-cases/create-user-use-case';
 import { DeleteUserUseCase } from './application/use-cases/delete-user-use-case';

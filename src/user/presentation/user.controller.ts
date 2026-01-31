@@ -8,30 +8,31 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { Roles } from 'src/commons/decorators/roles.decorator';
+import { AuthGuard } from 'src/commons/guards/auth.guard';
+import { RolesGuard } from 'src/commons/guards/roles.guard';
+
+import { AuthUserUseCase } from '../application/use-cases/auth-user-use-case';
 import { CreateUserUseCase } from '../application/use-cases/create-user-use-case';
-import { CreateUserRequestDto } from './dto/request/create-user.dto';
-import { CreateUserResponseDto } from './dto/response/create-user-response.dto';
-import { FindUserByIdUseCase } from '../application/use-cases/find-user-by-id-use-case';
-import { FindUserByIdResponseDto } from './dto/response/find-user-by-id-response.dto';
-import { FindUserByEmailUseCase } from '../application/use-cases/find-user-by-email-use-case';
-import { FindUserByEmailResponseDto } from './dto/response/find-user-by-email-response.dto';
-import { UpdateUserRequestDto } from './dto/request/update-user.dto';
-import { UpdateUserResponseDto } from './dto/response/update-user-response.dto';
-import { UpdateUserUseCase } from '../application/use-cases/update-user-use-case';
-import { DeleteUserResponseDto } from './dto/response/delete-user-response.dto';
 import { DeleteUserUseCase } from '../application/use-cases/delete-user-use-case';
 import { FindAllUserUseCase } from '../application/use-cases/find-all-user-use-case';
-import { FindAllUserResponseDto } from './dto/response/find-all-user-response.dto';
-import { AuthUserRequestDto } from './dto/request/auth-user.dto';
-import { AuthUserResponseDto } from './dto/response/auth-user-response.dto';
-import { AuthUserUseCase } from '../application/use-cases/auth-user-use-case';
-import { AuthGuard } from 'src/commons/guards/auth.guard';
+import { FindUserByEmailUseCase } from '../application/use-cases/find-user-by-email-use-case';
+import { FindUserByIdUseCase } from '../application/use-cases/find-user-by-id-use-case';
 import { UpdateProfileUseCase } from '../application/use-cases/update-profile-use-case';
-import { UpdateProfileRequestDto } from './dto/request/update-profile.dto';
+import { UpdateUserUseCase } from '../application/use-cases/update-user-use-case';
 import { Profile } from '../domain/entities/profile.entity';
+import { AuthUserRequestDto } from './dto/request/auth-user.dto';
+import { CreateUserRequestDto } from './dto/request/create-user.dto';
+import { UpdateProfileRequestDto } from './dto/request/update-profile.dto';
+import { UpdateUserRequestDto } from './dto/request/update-user.dto';
+import { AuthUserResponseDto } from './dto/response/auth-user-response.dto';
+import { CreateUserResponseDto } from './dto/response/create-user-response.dto';
+import { DeleteUserResponseDto } from './dto/response/delete-user-response.dto';
+import { FindAllUserResponseDto } from './dto/response/find-all-user-response.dto';
+import { FindUserByEmailResponseDto } from './dto/response/find-user-by-email-response.dto';
+import { FindUserByIdResponseDto } from './dto/response/find-user-by-id-response.dto';
 import { UpdateProfileResponseDto } from './dto/response/update-profile-response.dto';
-import { RolesGuard } from 'src/commons/guards/roles.guard';
-import { Roles } from 'src/commons/decorators/roles.decorator';
+import { UpdateUserResponseDto } from './dto/response/update-user-response.dto';
 
 @Controller('users')
 export class UserController {

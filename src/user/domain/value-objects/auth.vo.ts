@@ -1,5 +1,5 @@
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
+import type { JwtService } from '@nestjs/jwt';
+import type { ConfigService } from '@nestjs/config';
 
 export class AuthVO {
   constructor(
@@ -7,8 +7,13 @@ export class AuthVO {
     private readonly configService: ConfigService,
   ) {}
 
-  async signIn(id: string | null, email: string, name: string, role: string) {
-    const token = this.jwtService.sign(
+  async signIn(
+    id: string | null,
+    email: string,
+    name: string,
+    role: string,
+  ): Promise<string> {
+    return await this.jwtService.signAsync(
       {
         id,
         email,
@@ -19,15 +24,16 @@ export class AuthVO {
         secret: this.configService.get('JWT_SECRET'),
       },
     );
-
-    return token;
   }
 
   async verify(token: string) {
-    const decodedToken = this.jwtService.verify(token, {
+    return await this.jwtService.verifyAsync<{
+      id: string | null;
+      email: string;
+      name: string;
+      role: string;
+    }>(token, {
       secret: this.configService.get('JWT_SECRET'),
     });
-
-    return decodedToken;
   }
 }

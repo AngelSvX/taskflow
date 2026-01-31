@@ -1,24 +1,19 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
-import { CreateUserUseCase } from './application/use-cases/create-user-use-case';
-import { UserController } from './presentation/user.controller';
-import { UserRepository } from './domain/repositories/user.repository';
-import { UserPrismaRepository } from './infrastructure/prisma/user-prisma.repository';
-import { FindUserByIdUseCase } from './application/use-cases/find-user-by-id-use-case';
-import { FindUserByEmailUseCase } from './application/use-cases/find-user-by-email-use-case';
-import { UpdateUserUseCase } from './application/use-cases/update-user-use-case';
-import { DeleteUserUseCase } from './application/use-cases/delete-user-use-case';
-import { FindAllUserUseCase } from './application/use-cases/find-all-user-use-case';
-import { AuthUserUseCase } from './application/use-cases/auth-user-use-case';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthMiddleware } from 'src/commons/middlewares/auth.middleware';
-import { ProfileRepository } from './domain/repositories/profile.repository';
-import { ProfilePrismaRepository } from './infrastructure/prisma/profile-prisma.repository';
+import { AuthUserUseCase } from './application/use-cases/auth-user-use-case';
+import { CreateUserUseCase } from './application/use-cases/create-user-use-case';
+import { DeleteUserUseCase } from './application/use-cases/delete-user-use-case';
+import { FindAllUserUseCase } from './application/use-cases/find-all-user-use-case';
+import { FindUserByEmailUseCase } from './application/use-cases/find-user-by-email-use-case';
+import { FindUserByIdUseCase } from './application/use-cases/find-user-by-id-use-case';
 import { UpdateProfileUseCase } from './application/use-cases/update-profile-use-case';
+import { UpdateUserUseCase } from './application/use-cases/update-user-use-case';
+import { ProfileRepository } from './domain/repositories/profile.repository';
+import { UserRepository } from './domain/repositories/user.repository';
+import { ProfilePrismaRepository } from './infrastructure/prisma/profile-prisma.repository';
+import { UserPrismaRepository } from './infrastructure/prisma/user-prisma.repository';
+import { UserController } from './presentation/user.controller';
 
 @Module({
   imports: [],

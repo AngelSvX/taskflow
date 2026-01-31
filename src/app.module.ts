@@ -5,10 +5,12 @@ import { UserModule } from './user/user.module';
 import { PrismaModule } from './database/prisma/prisma.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { ProjectModule } from './projects/project.module';
 
 @Module({
   imports: [
-    UserModule, 
+    UserModule,
+    ProjectModule,
     PrismaModule,
     ConfigModule.forRoot({
       isGlobal: true

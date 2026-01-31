@@ -9,20 +9,25 @@ export class AuthUserUseCase {
   constructor(
     @Inject(UserRepository)
     private readonly userRepository: UserRepository,
+    // TODO: Falta agregar el readonly
     private jwtService: JwtService,
+    // TODO: Falta agregar el readonly
     private configService: ConfigService,
   ) {}
 
+  // TODO: Cuando es autenticación los errores deben dar la menor información posible
   async execute(email: string, password: string): Promise<string> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
+      // TODO: Indicar usuario y/o contraseña incorrecta
       throw new NotFoundException('Usuario no encontrado');
     }
 
     const isPasswordValid = await PasswordVO.compare(password, user.password);
 
     if (!isPasswordValid) {
+      // TODO: Indicar usuario y/o contraseña incorrecta
       throw new NotFoundException('Contraseña incorrecta');
     }
 

@@ -4,6 +4,7 @@ import { Test } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+// TODO: Eliminar innecesario a menos que se use para un endpoint a nivel de root
 describe('AppController', () => {
   let appController: AppController;
 

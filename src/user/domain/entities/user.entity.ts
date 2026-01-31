@@ -2,6 +2,7 @@ import type { Project } from 'src/projects/domain/entities/project.entity';
 
 import type { Profile } from './profile.entity';
 
+// TODO: Para la inmutabilidad hacer private el constructor y usar static factory methods
 export class User {
   constructor(
     public readonly id: string | null,

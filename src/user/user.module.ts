@@ -45,6 +45,7 @@ import { UserController } from './presentation/user.controller';
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
+    // TODO: A mi criterio es mejor la autorización a nivel de controller con Guards
     consumer.apply(AuthMiddleware).forRoutes('users/find');
   }
 }

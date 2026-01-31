@@ -47,17 +47,24 @@ export class UserController {
     private readonly updateProfileUseCase: UpdateProfileUseCase,
   ) {}
 
+  // TODO: Las siguientes observaciones aplican para todos los endpoints
   @Post('/create')
+  // TODO: A mi criterio es mejor devolver el código de estado así (imports de @nestjs/common)
+  // @HttpCode(HttpStatus.CREATED)
   async createUser(
+    // TODO: Faltan validaciones más fuertes las de class-validator se quedan cortas usar arktype, zod, etc.
     @Body() user: CreateUserRequestDto,
   ): Promise<CreateUserResponseDto> {
+    // TODO: No usar console.log en su lugar usar logger de nestjs
     console.log('Usuario desde el controlador', user);
 
     await this.createUserUseCase.execute(user);
+    // TODO: A mi criterio para mejorar la legibilidad del código se debe separar con lineas en blanco porciones del código que no sean comunes entre si
+    // TODO: Si vas a devolver un objeto de respuesta, usar una interfaz para que todos los endpoints lo cumplan
     return {
-      code: '201',
-      status: 'success',
-      message: 'User created successfully',
+      code: '201', // TODO: Lo común es tener estos textos en una constante
+      status: 'success', // TODO: Lo común es tener estos textos en una constante
+      message: 'User created successfully', // TODO: En este caso usar i18n si es posible
     };
   }
 

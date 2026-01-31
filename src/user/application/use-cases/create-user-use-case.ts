@@ -14,6 +14,7 @@ export class CreateUserUseCase {
   async execute(user: CreateUserRequestDto): Promise<void> {
     const userExists = await this.userRepository.findByEmail(user.email);
 
+    // TODO: Usar logger de nestjs
     console.log('Usuario desde el use case', user);
 
     if (userExists) {

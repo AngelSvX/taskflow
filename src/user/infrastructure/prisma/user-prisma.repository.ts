@@ -8,6 +8,7 @@ export class UserPrismaRepository implements UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(user: User): Promise<void> {
+    // TODO: Usar logger de nestjs
     console.log('Usuario desde el prisma', user);
     await this.prisma.users.create({
       data: {
@@ -18,6 +19,7 @@ export class UserPrismaRepository implements UserRepository {
         profiles: {
           create: {
             bio: user.profile?.bio,
+            // TODO: Usar librería o utilitario para manejo de URLs
             avatar_url: `https://ui-avatars.com/api/?name=${user.name}?background=0D8ABC&color=fff`,
           },
         },

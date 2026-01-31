@@ -19,6 +19,7 @@ import { UserModule } from './user/user.module';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
+      // TODO: Usar configuraciones más acotadas y validadas al momento de levantar el proyecto como https://arkenv.js.org/ o https://github.com/Nikaple/nest-typed-config
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
@@ -27,7 +28,7 @@ import { UserModule } from './user/user.module';
       }),
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController], // TODO: Eliminar innecesario a menos que se use para un endpoint a nivel de root
+  providers: [AppService], // TODO: Eliminar innecesario a menos que se use para un endpoint a nivel de root
 })
 export class AppModule {}

@@ -24,24 +24,32 @@ export class ProjectPrismaRepository implements ProjectRepository{
             where: {
                 id: Number(id),
             },
+            include: {
+                users: true,
+            }
         });
 
         if(!project){
             return null;
         }
 
-        return new Project(project.id, project.user_id, project.title, project.description);
+        return new Project(project.id, project.user_id, project.title, project.description, project.users.name);
 
     }
 
     async findByUserId(userId: string): Promise<Project[]> {
         const projects = await this.prismaService.projects.findMany({
             where: {
-                user_id: Number(userId),
+                users: {
+                    id: Number(userId)
+                }
             },
+            include: {
+                users: true,
+            }
         });
 
-        return projects.map((project) => new Project(project.id, project.user_id, project.title, project.description));
+        return projects.map((project) => new Project(project.id, project.user_id, project.title, project.description, project.users.name));
     }
 
 }

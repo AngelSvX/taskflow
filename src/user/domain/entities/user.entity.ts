@@ -1,3 +1,4 @@
+import { Project } from "src/projects/domain/entities/project.entity";
 import { Profile } from "./profile.entity";
 
 export class User {
@@ -8,5 +9,6 @@ export class User {
     public password: string,
     public position: string,
     public profile: Profile | null,
+    public projects?: Project[] | null,
   ) {}
 }

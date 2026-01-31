@@ -6,11 +6,13 @@ import { PrismaModule } from './database/prisma/prisma.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { ProjectModule } from './projects/project.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
     UserModule,
     ProjectModule,
+    TasksModule,
     PrismaModule,
     ConfigModule.forRoot({
       isGlobal: true

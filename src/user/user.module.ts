@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { CreateUserUseCase } from './application/use-cases/create-user-use-case';
 import { UserController } from './presentation/user.controller';
 import { UserRepository } from './domain/repositories/user.repository';
@@ -44,10 +49,6 @@ import { UpdateProfileUseCase } from './application/use-cases/update-profile-use
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
-    consumer
-      .apply(AuthMiddleware)
-      .forRoutes(
-        'users/find'
-      )
+    consumer.apply(AuthMiddleware).forRoutes('users/find');
   }
 }

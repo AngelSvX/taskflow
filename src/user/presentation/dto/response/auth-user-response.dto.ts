@@ -1,6 +1,6 @@
 export class AuthUserResponseDto {
-    code: string;
-    status: string;
-    message: string;
-    token: string;
+  code: string;
+  status: string;
+  message: string;
+  token: string;
 }

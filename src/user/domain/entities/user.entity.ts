@@ -1,5 +1,5 @@
-import { Project } from "src/projects/domain/entities/project.entity";
-import { Profile } from "./profile.entity";
+import { Project } from 'src/projects/domain/entities/project.entity';
+import { Profile } from './profile.entity';
 
 export class User {
   constructor(

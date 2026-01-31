@@ -5,12 +5,10 @@ import { UserRepository } from 'src/user/domain/repositories/user.repository';
 
 @Injectable()
 export class UserPrismaRepository implements UserRepository {
-  constructor(
-    private readonly prisma: PrismaService,
-  ) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(user: User): Promise<void> {
-    console.log("Usuario desde el prisma", user)
+    console.log('Usuario desde el prisma', user);
     await this.prisma.users.create({
       data: {
         email: user.email,
@@ -21,8 +19,8 @@ export class UserPrismaRepository implements UserRepository {
           create: {
             bio: user.profile?.bio,
             avatar_url: `https://ui-avatars.com/api/?name=${user.name}?background=0D8ABC&color=fff`,
-          }
-        }
+          },
+        },
       },
     });
   }
@@ -30,7 +28,7 @@ export class UserPrismaRepository implements UserRepository {
   async findByEmail(email: string): Promise<User | null> {
     const user = await this.prisma.users.findUnique({
       where: {
-        email: email
+        email: email,
       },
       include: {
         profiles: true,
@@ -41,7 +39,14 @@ export class UserPrismaRepository implements UserRepository {
       return null;
     }
 
-    return new User(user.id.toString(), user.name, user.email, user.password, user.position, user.profiles);
+    return new User(
+      user.id.toString(),
+      user.name,
+      user.email,
+      user.password,
+      user.position,
+      user.profiles,
+    );
   }
 
   async findById(id: string): Promise<User | null> {
@@ -58,21 +63,33 @@ export class UserPrismaRepository implements UserRepository {
       return null;
     }
 
-    return new User(user.id.toString(), user.name, user.email, user.password, user.position, null);
+    return new User(
+      user.id.toString(),
+      user.name,
+      user.email,
+      user.password,
+      user.position,
+      null,
+    );
   }
 
   async findAll(): Promise<User[]> {
-    const users = await this.prisma.users.findMany(
-      {
-        include: {
-          profiles: true,
-        },
-      }
-    );
+    const users = await this.prisma.users.findMany({
+      include: {
+        profiles: true,
+      },
+    });
 
     return users.map(
       (user) =>
-        new User(user.id.toString(), user.name, user.email, user.password, user.position, user.profiles),
+        new User(
+          user.id.toString(),
+          user.name,
+          user.email,
+          user.password,
+          user.position,
+          user.profiles,
+        ),
     );
   }
 
@@ -96,5 +113,4 @@ export class UserPrismaRepository implements UserRepository {
       },
     });
   }
-
 }

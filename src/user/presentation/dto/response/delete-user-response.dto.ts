@@ -1,5 +1,5 @@
 export class DeleteUserResponseDto {
-    code: number;
-    status: string;
-    message: string;
+  code: number;
+  status: string;
+  message: string;
 }

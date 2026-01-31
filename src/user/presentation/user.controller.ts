@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateUserUseCase } from '../application/use-cases/create-user-use-case';
 import { CreateUserRequestDto } from './dto/request/create-user.dto';
 import { CreateUserResponseDto } from './dto/response/create-user-response.dto';
@@ -41,8 +50,7 @@ export class UserController {
   async createUser(
     @Body() user: CreateUserRequestDto,
   ): Promise<CreateUserResponseDto> {
-
-    console.log("Usuario desde el controlador", user)
+    console.log('Usuario desde el controlador', user);
 
     await this.createUserUseCase.execute(user);
     return {
@@ -53,7 +61,9 @@ export class UserController {
   }
 
   @Post('/auth')
-  async authUser(@Body() user: AuthUserRequestDto ): Promise<AuthUserResponseDto>{
+  async authUser(
+    @Body() user: AuthUserRequestDto,
+  ): Promise<AuthUserResponseDto> {
     const token = await this.authUserUseCase.execute(user.email, user.password);
     return {
       code: '200',
@@ -65,7 +75,9 @@ export class UserController {
 
   @Post('/find/email')
   @UseGuards(AuthGuard)
-  async findUserByEmail(@Body("email") email: string): Promise<FindUserByEmailResponseDto>{
+  async findUserByEmail(
+    @Body('email') email: string,
+  ): Promise<FindUserByEmailResponseDto> {
     const user = await this.findUserByEmailUseCase.execute(email);
     return {
       code: 200,
@@ -79,15 +91,15 @@ export class UserController {
         position: user.position,
         profiles: {
           bio: user.profile?.bio || '',
-          avatar_url: user.profile?.avatar_url || '', 
-        }
-      }
-    }    
+          avatar_url: user.profile?.avatar_url || '',
+        },
+      },
+    };
   }
 
-  @Delete("/delete/:id")
+  @Delete('/delete/:id')
   @UseGuards(AuthGuard)
-  async deleteUser(@Param('id') id: string): Promise<DeleteUserResponseDto>{
+  async deleteUser(@Param('id') id: string): Promise<DeleteUserResponseDto> {
     await this.deleteUserUseCase.execute(id);
     return {
       code: 200,
@@ -96,30 +108,33 @@ export class UserController {
     };
   }
 
-  @Get("/find/all")
+  @Get('/find/all')
   @UseGuards(AuthGuard)
-  async findAllUser(): Promise<FindAllUserResponseDto>{
+  async findAllUser(): Promise<FindAllUserResponseDto> {
     const users = await this.findAllUserUseCase.execute();
     return {
       code: 200,
       status: 'success',
       message: 'Users found successfully',
-      data: users.map(user => ({
+      data: users.map((user) => ({
         id: user.id || '',
         name: user.name,
         email: user.email,
         position: user.position,
         profiles: {
           bio: user.profile?.bio || '',
-          avatar_url: user.profile?.avatar_url || '', 
-        }
+          avatar_url: user.profile?.avatar_url || '',
+        },
       })),
-    }
+    };
   }
 
-  @Patch("/update/:id")
+  @Patch('/update/:id')
   @UseGuards(AuthGuard)
-  async updateUser(@Body() user: UpdateUserRequestDto, @Param('id') id: string): Promise<UpdateUserResponseDto> {
+  async updateUser(
+    @Body() user: UpdateUserRequestDto,
+    @Param('id') id: string,
+  ): Promise<UpdateUserResponseDto> {
     await this.updateUserUseCase.execute(id, user);
     return {
       code: 200,
@@ -129,13 +144,16 @@ export class UserController {
         id,
         name: user.name,
         email: user.email,
-      }
+      },
     };
   }
 
-  @Patch("/updateProfile/:id")
+  @Patch('/updateProfile/:id')
   @UseGuards(AuthGuard)
-  async updateProfile(@Body() profile: UpdateProfileRequestDto, @Param('id') id: string): Promise<UpdateProfileResponseDto>{
+  async updateProfile(
+    @Body() profile: UpdateProfileRequestDto,
+    @Param('id') id: string,
+  ): Promise<UpdateProfileResponseDto> {
     await this.updateProfileUseCase.execute(profile as Profile, id);
     return {
       code: 200,
@@ -145,14 +163,16 @@ export class UserController {
         id,
         bio: profile.bio,
         avatar_url: profile.avatar_url,
-      }
+      },
     };
   }
 
   @Get('/find/:id')
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles("User")
-  async findUserById(@Param('id') id: string): Promise<FindUserByIdResponseDto> {
+  @Roles('User')
+  async findUserById(
+    @Param('id') id: string,
+  ): Promise<FindUserByIdResponseDto> {
     const user = await this.findUserByIdUseCase.execute(id);
     return {
       code: 200,
@@ -166,10 +186,9 @@ export class UserController {
         position: user.position,
         profiles: {
           bio: user.profile?.bio || '',
-          avatar_url: user.profile?.avatar_url || '', 
-        }
-      }
-    }
+          avatar_url: user.profile?.avatar_url || '',
+        },
+      },
+    };
   }
-
 }

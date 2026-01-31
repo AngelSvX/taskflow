@@ -13,7 +13,7 @@ import { ProjectModule } from './projects/project.module';
     ProjectModule,
     PrismaModule,
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -21,10 +21,10 @@ import { ProjectModule } from './projects/project.module';
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
-          expiresIn: configService.get('JWT_EXPIRES_IN') || '1d'
-        }
+          expiresIn: configService.get('JWT_EXPIRES_IN') || '1d',
+        },
       }),
-    })
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

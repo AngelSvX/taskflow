@@ -1,5 +1,5 @@
 export class Profile {
-  constructor(
+  private constructor(
     public readonly id: number,
     public user_id: number,
     public bio: string | null,

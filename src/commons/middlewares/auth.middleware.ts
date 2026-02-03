@@ -1,10 +1,11 @@
-import { Injectable, NestMiddleware } from "@nestjs/common";
+import { Injectable, Logger, NestMiddleware } from "@nestjs/common";
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware{
+    private readonly logger = new Logger(AuthMiddleware.name);
     use(req: Request, res: Response, next: (error?: any) => void) {
-        console.log("this is the middleware");
-        console.log(req.headers);
+        this.logger.log("this is the middleware");
+        this.logger.log(req.headers);
         next();
     }
 } 

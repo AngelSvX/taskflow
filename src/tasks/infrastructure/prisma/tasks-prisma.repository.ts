@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { PrismaService } from "src/database/prisma/prisma.service";
 import { Task } from "src/tasks/domain/entities/tasks.entity";
 import { TaskRepository } from "src/tasks/domain/repositories/tasks.repository";
@@ -9,8 +9,10 @@ export class TaskPrismaRepository implements TaskRepository{
         private readonly prismaService: PrismaService
     ){}
 
+    private readonly logger = new Logger(TaskPrismaRepository.name);
+
     async create(task: Task): Promise<void> {
-        console.log(task)
+        this.logger.log(task);
         await this.prismaService.tasks.create({
             data: {
                 project_id: task.project_id,
@@ -31,7 +33,7 @@ export class TaskPrismaRepository implements TaskRepository{
                 }
             }
         });
-        return tasks.map(task => new Task(
+        return tasks.map(task => Task.create(
             task.id,
             task.project_id,
             task.title,
@@ -59,7 +61,7 @@ export class TaskPrismaRepository implements TaskRepository{
             return null;
         }
 
-        return new Task(
+        return Task.create(
             task.id,
             task.project_id,
             task.title,

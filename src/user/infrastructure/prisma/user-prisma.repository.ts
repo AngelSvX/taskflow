@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma/prisma.service';
 import { User } from 'src/user/domain/entities/user.entity';
 import { UserRepository } from 'src/user/domain/repositories/user.repository';
@@ -9,8 +9,10 @@ export class UserPrismaRepository implements UserRepository {
     private readonly prisma: PrismaService,
   ) { }
 
+  private readonly logger = new Logger(UserPrismaRepository.name);
+
   async create(user: User): Promise<void> {
-    console.log("Usuario desde el prisma", user)
+    this.logger.log(user);
     await this.prisma.users.create({
       data: {
         email: user.email,
@@ -41,7 +43,7 @@ export class UserPrismaRepository implements UserRepository {
       return null;
     }
 
-    return new User(user.id.toString(), user.name, user.email, user.password, user.position, user.profiles);
+    return User.create(user.id.toString(), user.name, user.email, user.password, user.position, user.profiles);
   }
 
   async findById(id: string): Promise<User | null> {
@@ -58,7 +60,7 @@ export class UserPrismaRepository implements UserRepository {
       return null;
     }
 
-    return new User(user.id.toString(), user.name, user.email, user.password, user.position, null);
+    return User.create(user.id.toString(), user.name, user.email, user.password, user.position, null);
   }
 
   async findAll(): Promise<User[]> {
@@ -72,7 +74,7 @@ export class UserPrismaRepository implements UserRepository {
 
     return users.map(
       (user) =>
-        new User(user.id.toString(), user.name, user.email, user.password, user.position, user.profiles),
+        User.create(user.id.toString(), user.name, user.email, user.password, user.position, user.profiles),
     );
   }
 

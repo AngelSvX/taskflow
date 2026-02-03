@@ -16,7 +16,7 @@ export class UpdateUserUseCase {
             throw new NotFoundException('User not found');
         }
 
-        const userUpdated = new User(id, user.name || userExists.name, user.email || userExists.email, userExists.password, userExists.position, userExists.profile);
+        const userUpdated = User.update(id, user.name || userExists.name, user.email || userExists.email, userExists.password, userExists.position, userExists.profile);
 
         await this.userRepository.update(id, userUpdated);
 

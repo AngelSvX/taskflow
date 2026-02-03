@@ -34,7 +34,7 @@ export class ProjectPrismaRepository implements ProjectRepository{
             return null;
         }
 
-        return new Project(project.id, project.user_id, project.title, project.description, project.users.name, project.users.email);
+        return Project.create(project.id, project.user_id, project.title, project.description, project.users.name, project.users.email);
 
     }
 
@@ -50,7 +50,7 @@ export class ProjectPrismaRepository implements ProjectRepository{
             }
         });
 
-        return projects.map((project) => new Project(project.id, project.user_id, project.title, project.description, project.users.name, project.users.email));
+        return projects.map((project) => Project.create(project.id, project.user_id, project.title, project.description, project.users.name, project.users.email));
     }
 
 }

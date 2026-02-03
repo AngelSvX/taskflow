@@ -9,21 +9,21 @@ export class AuthUserUseCase {
     constructor(
         @Inject(UserRepository)
         private readonly userRepository: UserRepository,
-        private jwtService: JwtService,
-        private configService: ConfigService,
+        private readonly jwtService: JwtService,
+        private readonly configService: ConfigService,
     ){}
 
     async execute(email: string, password: string): Promise<string>{
         const user = await this.userRepository.findByEmail(email);
 
         if(!user){
-            throw new NotFoundException("Usuario no encontrado");
+            throw new NotFoundException("Wrong data");
         }
 
         const isPasswordValid = await PasswordVO.compare(password, user.password)
 
         if(!isPasswordValid){
-            throw new NotFoundException("Contraseña incorrecta");
+            throw new NotFoundException("Wrong data");
         }
 
         const authVO = new AuthVO(this.jwtService, this.configService)
